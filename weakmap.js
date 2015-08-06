@@ -217,13 +217,20 @@ void function(global, undefined_, undefined){
     return storage;
   }
 
-
-  if (typeof module !== 'undefined') {
-    module.exports = WM;
-  } else if (typeof exports !== 'undefined') {
-    exports.WeakMap = WM;
-  } else if (!('WeakMap' in global)) {
-    global.WeakMap = WM;
+  if ('WeakMap' in global) {
+    if (typeof module !== 'undefined') {
+      module.exports = global.WeakMap;
+    } else if (typeof exports !== 'undefined') {
+      exports.WeakMap = global.WeakMap;
+    }
+  } else {
+    if (typeof module !== 'undefined') {
+      module.exports = WM;
+    } else if (typeof exports !== 'undefined') {
+      exports.WeakMap = WM;
+    } else {
+      global.WeakMap = WM;
+    }
   }
 
   WM.createStorage = createStorage;
